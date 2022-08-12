@@ -2,7 +2,7 @@
 
 ### Changelog from Original:
 
-- 12-Aug-2022: Added the ability for bounding boxed to carry over from the prevoius frame (note: be careful when reviewing bounding box placement since a frame with no drone could be incorrect with the position of the drone from the prevoius frame)
+- 12-Aug-2022: Added the ability for bounding boxed to carry over from the prevoius frame (note: be careful when reviewing bounding box placement since a frame with no drone could be incorrectly labeled with the position of the drone from the prevoius frame)
 
 
 ## Setup
