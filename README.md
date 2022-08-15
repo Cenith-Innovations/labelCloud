@@ -1,20 +1,9 @@
-<p align="center">
-    <img src="https://img.shields.io/badge/contributions-welcome!-green" alt="Contributions welcome!"/>
-    <img src="https://img.shields.io/github/last-commit/ch-sa/labelCloud?color=blue">
-    <img src="https://img.shields.io/pypi/pyversions/labelCloud" />
-    <img src="https://github.com/ch-sa/labelCloud/workflows/Tests/badge.svg" />
-    <img src="https://img.shields.io/badge/code%20style-black-000000.svg" />
-</p>
+# This Fork has been changed from the [original](https://github.com/ch-sa/labelCloud) 
 
+### Changelog from Original:
 
-# labelCloud
-A lightweight tool for labeling 3D bounding boxes in point clouds.
+- 12-Aug-2022: Added the ability for bounding boxed to carry over from the prevoius frame (note: be careful when reviewing bounding box placement since a frame with no drone could be incorrectly labeled with the position of the drone from the prevoius frame)
 
-![Overview of the Labeling Tool](https://raw.githubusercontent.com/ch-sa/labelCloud/master/docs/io_overview.png)
-
-:new: *labelCloud is now [part of the PyPI](https://pypi.org/project/labelCloud/) and can be installed via pip!*
-
-:new: *We are currently evaluating labelCloud and invite you to fill this questionaire https://forms.gle/moEyjGSa1Eiiq7VT8 (~5 min)!*
 
 ## Setup
 :information_source: *Currently labelCloud supports Python 3.6 to 3.9.*
