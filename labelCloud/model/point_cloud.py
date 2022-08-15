@@ -72,7 +72,8 @@ class PointCloud(object):
         self.points = points
         self.colors = colors if type(colors) == np.ndarray and len(colors) > 0 else None
         self.vbo = None
-        self.center = tuple(np.sum(points[:, i]) / len(points) for i in range(3))
+        #self.center = tuple(np.sum(points[:, i]) / len(points) for i in range(3))
+        self.center = (0,0,0)
         self.pcd_mins = np.amin(points, axis=0)
         self.pcd_maxs = np.amax(points, axis=0)
         self.init_translation = init_translation or calculate_init_translation(
@@ -191,16 +192,19 @@ class PointCloud(object):
             self.trans_x, self.trans_y, self.trans_z
         )  # third, pcd translation
 
+        '''
         pcd_center = np.add(
             self.pcd_mins, (np.subtract(self.pcd_maxs, self.pcd_mins) / 2)
         )
-        GL.glTranslate(*pcd_center)  # move point cloud back
+        '''
+        pcd_center = np.array([0,0,0])
+        #GL.glTranslate(*pcd_center)  # move point cloud back
 
         GL.glRotate(self.rot_x, 1.0, 0.0, 0.0)
         GL.glRotate(self.rot_y, 0.0, 1.0, 0.0)  # second, pcd rotation
         GL.glRotate(self.rot_z, 0.0, 0.0, 1.0)
 
-        GL.glTranslate(*(pcd_center * -1))  # move point cloud to center for rotation
+        #GL.glTranslate(*(pcd_center * -1))  # move point cloud to center for rotation
 
         GL.glPointSize(config.getfloat("POINTCLOUD", "POINT_SIZE"))
         GL.glBindBuffer(GL.GL_ARRAY_BUFFER, self.vbo)

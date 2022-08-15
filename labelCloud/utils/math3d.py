@@ -42,7 +42,7 @@ def rotate_around_x(
             [0, np.sin(angle), np.cos(angle)],
         ]
     )
-    return r_matrix.dot(point)
+    return np.matmul(r_matrix, point)
 
 
 def rotate_around_y(
@@ -57,7 +57,7 @@ def rotate_around_y(
             [-math.sin(angle), 0, math.cos(angle)],
         ]
     )
-    return r_matrix.dot(point)
+    return np.matmul(r_matrix, point)
 
 
 def rotate_around_z(
@@ -72,7 +72,7 @@ def rotate_around_z(
             [0, 0, 1],
         ]
     )
-    return r_matrix.dot(point)
+    return np.matmul(r_matrix, point)
 
 
 def rotate_around_zyx(

@@ -258,6 +258,41 @@ class Controller:
                 self.align_mode.reset()
                 logging.info("Resetted selected points!")
 
+        # BBOX Orthographic views
+        elif (a0.key() == QtCore.Qt.Key_I):
+            # view from the top
+            if self.bbox_controller.has_active_bbox():
+                print("Viewing bbox from top")
+                curr_bbox = self.bbox_controller.get_active_bbox()
+                self.pcd_manager.view_bbox_top(curr_bbox)
+            else:
+                self.view.status_manager.set_message(
+                    "select a BBOX to use this feature",
+                    context=Context.CONTROL_PRESSED,
+                )
+        elif (a0.key() == QtCore.Qt.Key_K):
+            # view from the top
+            if self.bbox_controller.has_active_bbox():
+                print("Viewing bbox from front")
+                curr_bbox = self.bbox_controller.get_active_bbox()
+                self.pcd_manager.view_bbox_front(curr_bbox)
+            else:
+                self.view.status_manager.set_message(
+                    "select a BBOX to use this feature",
+                    context=Context.CONTROL_PRESSED,
+                )
+        elif (a0.key() == QtCore.Qt.Key_J):
+            # view from the top
+            if self.bbox_controller.has_active_bbox():
+                print("Viewing bbox from side")
+                curr_bbox = self.bbox_controller.get_active_bbox()
+                self.pcd_manager.view_bbox_side(curr_bbox)
+            else:
+                self.view.status_manager.set_message(
+                    "select a BBOX to use this feature",
+                    context=Context.CONTROL_PRESSED,
+                )
+
         # BBOX MANIPULATION
         elif (a0.key() == QtCore.Qt.Key_Y) or (a0.key() == QtCore.Qt.Key_Comma):
             # z rotate counterclockwise
