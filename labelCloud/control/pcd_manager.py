@@ -161,38 +161,29 @@ class PointCloudManger(object):
     def view_bbox_top(self, bbox: BBox) -> None:
         cx, cy, cz = bbox.get_center()
         rx, ry, rz = bbox.get_rotations()
-        print('rot: ',rx, ry, rz)
-        cam_point = rotate_around_zyx([cx, cy, cz], -rx, -ry, -rz, degrees=True)
+        self.pointcloud.set_translations(-cx, -cy, -cz-1)
+
+        self.pointcloud.set_rot_center(cx, cy, cz)
         self.pointcloud.set_rotations(-rx, -ry, -rz)
-        print('was: ', self.pointcloud.get_translations())
-        print('set to: ', -cam_point)
-        print('Diff: ', np.subtract(self.pointcloud.get_translations(), -cam_point))
-        print('dims: ', cx, cy, cz)
-        self.pointcloud.set_translations(-cam_point[0], -cam_point[1], -cam_point[2]-1)
+
+
 
     def view_bbox_front(self, bbox: BBox) -> None:
         cx, cy, cz = bbox.get_center()
         rx, ry, rz = bbox.get_rotations()
-        print('rot: ',rx, ry, rz)
-        cam_point = rotate_around_zyx([cx, cy, cz], -rx, 90-ry, -rz, degrees=True)
+        self.pointcloud.set_translations(-cx, -cy, -cz-1)
+
+        self.pointcloud.set_rot_center(cx, cy, cz)
         self.pointcloud.set_rotations(-rx, 90-ry, -rz)
-        print('was: ', self.pointcloud.get_translations())
-        print('set to: ', -cam_point)
-        print('Diff: ', np.subtract(self.pointcloud.get_translations(), -cam_point))
-        print('dims: ', cx, cy, cz)
-        self.pointcloud.set_translations(-cam_point[0], -cam_point[1], -cam_point[2]-1)
+
 
     def view_bbox_side(self, bbox: BBox) -> None:
         cx, cy, cz = bbox.get_center()
         rx, ry, rz = bbox.get_rotations()
-        print('rot: ',rx, ry, rz)
-        cam_point = rotate_around_zyx([cx, cy, cz], 270-rx, -ry, -rz, degrees=True)
+        self.pointcloud.set_translations(-cx, -cy, -cz-1)
+
+        self.pointcloud.set_rot_center(cx, cy, cz)
         self.pointcloud.set_rotations(270-rx, -ry, -rz)
-        print('was: ', self.pointcloud.get_translations())
-        print('set to: ', -cam_point)
-        print('Diff: ', np.subtract(self.pointcloud.get_translations(), -cam_point))
-        print('dims: ', cx, cy, cz)
-        self.pointcloud.set_translations(-cam_point[0], -cam_point[1], -cam_point[2])
 
     # MANIPULATOR
     def rotate_around_x(self, dangle) -> None:

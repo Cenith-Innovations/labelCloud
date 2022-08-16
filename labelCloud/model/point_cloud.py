@@ -65,6 +65,7 @@ class PointCloud(object):
         colors: Optional[np.ndarray] = None,
         init_translation: Optional[Tuple[float, float, float]] = None,
         init_rotation: Optional[Tuple[float, float, float]] = None,
+        init_rot_center: Optional[Tuple[float, float, float]] = None,
         write_buffer: bool = True,
     ) -> None:
         start_section(f"Loading {path.name}")
@@ -80,10 +81,12 @@ class PointCloud(object):
             self.center, self.pcd_mins, self.pcd_maxs
         )
         self.init_rotation = init_rotation or (0, 0, 0)
+        self.init_rot_center = init_rot_center or (0, 0, 0)
 
         # Point cloud transformations
         self.trans_x, self.trans_y, self.trans_z = self.init_translation
         self.rot_x, self.rot_y, self.rot_z = self.init_rotation
+        self.rc_x, self.rc_y, self.rc_z = self.init_rot_center
 
         if self.colorless and config.getboolean("POINTCLOUD", "COLORLESS_COLORIZE"):
             self.colors = colorize_points(
@@ -105,15 +108,16 @@ class PointCloud(object):
         perspective: Optional[Perspective] = None,
         write_buffer: bool = True,
     ) -> "PointCloud":
-        init_translation, init_rotation = (None, None)
+        init_translation, init_rotation, init_rot_center = (None, None, None)
         if perspective:
             init_translation = perspective.translation
             init_rotation = perspective.rotation
+            init_rot_center = perspective.rot_center
 
         points, colors = BasePointCloudHandler.get_handler(
             path.suffix
         ).read_point_cloud(path=path)
-        return cls(path, points, colors, init_translation, init_rotation, write_buffer)
+        return cls(path, points, colors, init_translation, init_rotation, init_rot_center, write_buffer)
 
     def to_file(self, path: Optional[Path] = None) -> None:
         if not path:
@@ -135,6 +139,9 @@ class PointCloud(object):
 
     def get_rotations(self) -> List[float]:
         return [self.rot_x, self.rot_y, self.rot_z]
+
+    def get_rot_center(self) -> List[float]:
+        return [self.rc_x, self.rc_y, self.rc_z]
 
     def get_translations(self) -> List[float]:
         return [self.trans_x, self.trans_y, self.trans_z]
@@ -158,6 +165,16 @@ class PointCloud(object):
         self.rot_x = x % 360
         self.rot_y = y % 360
         self.rot_z = z % 360
+
+    def set_rot_center(self, x: float, y: float, z: float) -> None:
+        '''
+        The center point for the cloud to rotate around
+        probably a good idea to set back to 0,0,0 when done
+        '''
+        self.rc_x = x
+        self.rc_y = y
+        self.rc_z = z
+
 
     def set_trans_x(self, val) -> None:
         self.trans_x = val
@@ -196,15 +213,27 @@ class PointCloud(object):
         pcd_center = np.add(
             self.pcd_mins, (np.subtract(self.pcd_maxs, self.pcd_mins) / 2)
         )
+
+        pcd_center = np.array([
+            self.trans_x,
+            self.trans_y,
+            self.trans_z
+        ])
         '''
-        pcd_center = np.array([0,0,0])
-        #GL.glTranslate(*pcd_center)  # move point cloud back
+        pcd_rot_center = np.array([
+            self.rc_x,
+            self.rc_y,
+            self.rc_z
+        ])
+
+
+        GL.glTranslate(*pcd_rot_center)  # move point cloud back
 
         GL.glRotate(self.rot_x, 1.0, 0.0, 0.0)
         GL.glRotate(self.rot_y, 0.0, 1.0, 0.0)  # second, pcd rotation
         GL.glRotate(self.rot_z, 0.0, 0.0, 1.0)
 
-        #GL.glTranslate(*(pcd_center * -1))  # move point cloud to center for rotation
+        GL.glTranslate(*(pcd_rot_center * -1))  # move point cloud to center for rotation
 
         GL.glPointSize(config.getfloat("POINTCLOUD", "POINT_SIZE"))
         GL.glBindBuffer(GL.GL_ARRAY_BUFFER, self.vbo)

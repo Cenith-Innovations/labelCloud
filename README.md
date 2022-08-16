@@ -82,6 +82,7 @@ All rotations are counterclockwise (i.e. a z-rotation of 90°/π is from the pos
 |         `W`, `A`, `S`, `D` <br> `Ctrl` + Right Mouse Button          | Translates the Bounding Box back, left, front, right |
 |                               `Q`, `E`                               | Lifts the Bounding Box up, down                      |
 |                               `X`, `Y`                               | Rotates the Boundign Box around z-Axis               |
+|                            `I`, `K`, `J`                             | View top, front and side views of the Bounding Box   |
 | Scrolling with the Cursor above a Bounding Box Side ("Side Pulling") | Changes the Dimension of the Bounding Box            |
 |                         `C` & `V`, `B` & `N`                         | Rotates the Bounding Box around y-Axis, x-Axis       |
 |                              *General*                               |                                                      |

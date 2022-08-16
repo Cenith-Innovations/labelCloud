@@ -10,10 +10,12 @@ if TYPE_CHECKING:
 class Perspective(object):
     translation: Tuple[float, float, float]
     rotation: Tuple[float, float, float]
+    rot_center: Tuple[float, float, float]
 
     @classmethod
     def from_point_cloud(cls, pointcloud: "PointCloud") -> "Perspective":
         return cls(
             translation=tuple(pointcloud.get_translations()),
             rotation=tuple(pointcloud.get_rotations()),
+            rot_center=tuple(pointcloud.get_rot_center()),
         )
