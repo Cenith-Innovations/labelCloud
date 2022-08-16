@@ -2,8 +2,9 @@
 
 ### Changelog from Original:
 
-- 12-Aug-2022: Added the ability for bounding boxed to carry over from the prevoius frame (note: be careful when reviewing bounding box placement since a frame with no drone could be incorrectly labeled with the position of the drone from the prevoius frame)
+- 16-Aug-2022: Added `I`, `J`, `K` shortcuts to view the bounding box from top, front, and side views.  
 
+- 12-Aug-2022: Added the ability for bounding boxed to carry over from the prevoius frame (note: be careful when reviewing bounding box placement since a frame with no drone could be incorrectly labeled with the position of the drone from the prevoius frame)
 
 ## Setup
 :information_source: *Currently labelCloud supports Python 3.6 to 3.9.*
