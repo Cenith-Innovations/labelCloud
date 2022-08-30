@@ -68,7 +68,7 @@ def pcap_to_cloud(source, metadata, num, out_dir, file_base, file_ext, field_idx
         pcd.colors = o3d.utility.Vector3dVector(color_img.reshape(-1, 3))
 
 
-        out_path = os.path.join(out_dir, f'{file_base}_{idx:06d}.{file_ext}')
+        out_path = os.path.join(out_dir, f'{file_base}{idx:06d}.{file_ext}')
         print(f'write frame #{idx} to file: {out_path}')
 
         o3d.io.write_point_cloud(out_path, pcd)
@@ -81,10 +81,10 @@ if __name__ == "__main__":
     parser.add_argument('pcap', metavar='*.pcap', type=str,
                         help='The pcap file')
     parser.add_argument('json', metavar='*.json', type=str,
-                        help='The pcap file')
+                        help='The metadata')
     parser.add_argument('-n', '--num', default=0,
                         help='How many frames to export')
-    parser.add_argument('-f', '--file_name', default='pntcloud',
+    parser.add_argument('-f', '--file_name', default='',
                         help='The file name')
     parser.add_argument('-e', '--ext', default='pcd',
                         help='The file extention')
