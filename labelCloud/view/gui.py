@@ -380,8 +380,12 @@ class GUI(QtWidgets.QMainWindow):
     def eventFilter(self, event_object, event) -> bool:
         # Keyboard Events
         # if (event.type() == QEvent.KeyPress) and (not self.line_edited_activated()):
+        if (event.type() == QEvent.KeyPress):
+            print(event, event_object)
+
         if (event.type() == QEvent.KeyPress) and (
-            event_object == self
+            event_object == self or
+            event_object == self.label_list
         ):  # TODO: Cleanup old filter
             self.controller.key_press_event(event)
             self.update_bbox_stats(self.controller.bbox_controller.get_active_bbox())
