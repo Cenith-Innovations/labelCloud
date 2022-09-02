@@ -175,6 +175,8 @@ class GUI(QtWidgets.QMainWindow):
         self.button_decr_dim = self.findChild(QtWidgets.QPushButton, "button_bbox_decr")
         self.button_incr_dim = self.findChild(QtWidgets.QPushButton, "button_bbox_incr")
 
+        self.carryoverBBox = self.findChild(QtWidgets.QCheckBox, "checkBox_carryoverBBox")
+        
         # 2d image viewer
         self.button_2D = self.findChild(QtWidgets.QPushButton, "button_open_2D")
         self.button_2D.setVisible(config.getboolean("USER_INTERFACE", "show_2d_image"))
@@ -285,6 +287,10 @@ class GUI(QtWidgets.QMainWindow):
         self.button_incr_dim.clicked.connect(
             lambda: self.controller.bbox_controller.scale()
         )
+        #carryover bbox
+        self.carryoverBBox.clicked.connect(
+            lambda: self.controller.toggle_carryoverBBox()
+        )
 
         # LABELING CONTROL
         self.curr_class_edit.textChanged.connect(
@@ -380,8 +386,6 @@ class GUI(QtWidgets.QMainWindow):
     def eventFilter(self, event_object, event) -> bool:
         # Keyboard Events
         # if (event.type() == QEvent.KeyPress) and (not self.line_edited_activated()):
-        if (event.type() == QEvent.KeyPress):
-            print(event, event_object)
 
         if (event.type() == QEvent.KeyPress) and (
             event_object == self or
