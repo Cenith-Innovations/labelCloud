@@ -88,7 +88,7 @@ if __name__ == "__main__":
                         help='The file name')
     parser.add_argument('-e', '--ext', default='pcd',
                         help='The file extention')
-    parser.add_argument('-d', '--dir', default='../clouds',
+    parser.add_argument('-d', '--dir', default='../../../clouds',
                         help='the out directory')
     parser.add_argument('--field', default=2,
                     help='''The field to use in coloring the points:\n

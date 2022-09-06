@@ -2,6 +2,8 @@
 
 ### Changelog from Original:
 
+- 02-Sep-2022: Can now use the checkbox on the left side to enable/disable the BBox carryover feature.
+
 - 16-Aug-2022: Added `I`, `J`, `K` shortcuts to view the bounding box from top, front, and side views.  
 
 - 12-Aug-2022: Added the ability for bounding boxed to carry over from the prevoius frame (note: be careful when reviewing bounding box placement since a frame with no drone could be incorrectly labeled with the position of the drone from the prevoius frame)

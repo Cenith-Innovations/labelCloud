@@ -82,7 +82,7 @@ if __name__ == "__main__":
                         help='The directory with the *.pcd files')
     parser.add_argument('--labels', default=None,
                         help='The directory with centroid_rel format labels')
-    parser.add_argument('-o', '--out_dir', default='./kitti',
+    parser.add_argument('-o', '--out_dir', default='../../../kitti',
                         help='directory for all the output data')
 
     #parser.add_argument('-s', '--start', default=0, help='number to start the file names at (for combining clips)')
