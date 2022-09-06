@@ -137,6 +137,11 @@ class PointCloudManger(object):
         logging.info(green("Loaded %s bboxes!" % len(bboxes)))
         return bboxes
 
+    def get_labels_from_index(self, pcd_index) -> List[BBox]:
+        bboxes = self.label_manager.import_labels(self.pcds[pcd_index])
+        logging.info(blue("Loaded %s prev bboxes!" % len(bboxes)))
+        return bboxes
+
     # SETTER
     def set_view(self, view: "GUI") -> None:
         self.view = view
