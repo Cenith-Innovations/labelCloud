@@ -31,6 +31,8 @@ class Controller:
         self.ctrl_pressed = False
         self.scroll_mode = False  # to enable the side-pulling
 
+        self.carryoverBBox = False
+
         # Correction states
         self.side_mode = False
         self.selected_side = None
@@ -64,7 +66,7 @@ class Controller:
             self.pcd_manager.get_next_pcd()
             self.reset()
             self.bbox_controller.set_bboxes(self.pcd_manager.get_labels_from_file())
-            if len(self.pcd_manager.get_labels_from_file()) == 0:
+            if len(self.pcd_manager.get_labels_from_file()) == 0 and self.carryoverBBox:
                 self.bbox_controller.set_bboxes(prev_bboxes)
                 print("Added %s prev bboxes!" % len(prev_bboxes))
         else:
@@ -94,6 +96,10 @@ class Controller:
         self.bbox_controller.reset()
         self.drawing_mode.reset()
         self.align_mode.reset()
+
+    def toggle_carryoverBBox(self) -> None:
+        """toggles wether a bbox is carried into the next frame"""
+        self.carryoverBBox = not self.carryoverBBox
 
     # CORRECTION METHODS
     def set_crosshair(self) -> None:
