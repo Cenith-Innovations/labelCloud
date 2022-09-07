@@ -242,7 +242,7 @@ class Controller:
                 self.selected_side, -a0.angleDelta().y() / 4000
             )  # ToDo implement method
         else:
-            self.pcd_manager.zoom_into(a0.angleDelta().y())
+            self.pcd_manager.zoom_into(a0.angleDelta().y()*4)
             self.scroll_mode = True
 
     def key_press_event(self, a0: QtGui.QKeyEvent) -> None:
