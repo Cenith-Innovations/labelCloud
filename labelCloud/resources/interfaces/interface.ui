@@ -691,6 +691,17 @@
               </widget>
             </item>
 
+			<item>
+              <widget class="QCheckBox" name="checkBox_estimateBBoxMove">
+                <property name="toolTip">
+                  <string>When carrying over bboxes, use the prevoius 2 to estimate the new position.</string>
+                </property>
+                <property name="text">
+                  <string>Estimate bbox movement.</string>
+                </property>
+              </widget>
+            </item>
+
 						<item>
 							<widget class="QPushButton" name="button_open_2D">
 								<property name="sizePolicy">

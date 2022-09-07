@@ -32,6 +32,7 @@ class Controller:
         self.scroll_mode = False  # to enable the side-pulling
 
         self.carryoverBBox = False
+        self.estimateBBoxMove = False
 
         # Correction states
         self.side_mode = False
@@ -62,11 +63,19 @@ class Controller:
         if save:
             self.save()
         if self.pcd_manager.pcds_left():
-            prev_bboxes = self.bbox_controller.bboxes
             self.pcd_manager.get_next_pcd()
             self.reset()
             self.bbox_controller.set_bboxes(self.pcd_manager.get_labels_from_file())
             if len(self.pcd_manager.get_labels_from_file()) == 0 and self.carryoverBBox:
+                prev_bboxes = self.pcd_manager.get_labels_from_index(self.pcd_manager.current_id - 1)
+                if self.estimateBBoxMove:
+                    if self.pcd_manager.current_id >= 2:
+                        prev2_bboxes = self.pcd_manager.get_labels_from_index(self.pcd_manager.current_id - 2)
+                        for bbox in prev_bboxes:
+                            for bbox2 in prev2_bboxes:
+                                if bbox.classname == bbox2.classname:
+                                    deltas = tuple(map(lambda i, j: i - j, bbox.get_center(), bbox2.get_center()))
+                                    bbox.translate_bbox(*deltas)
                 self.bbox_controller.set_bboxes(prev_bboxes)
                 print("Added %s prev bboxes!" % len(prev_bboxes))
         else:
@@ -100,6 +109,10 @@ class Controller:
     def toggle_carryoverBBox(self) -> None:
         """toggles wether a bbox is carried into the next frame"""
         self.carryoverBBox = not self.carryoverBBox
+
+    def toggle_estimateBBoxMove(self) -> None:
+        """toggles wether a bbox movement is estimated from previous frames"""
+        self.estimateBBoxMove = not self.estimateBBoxMove
 
     # CORRECTION METHODS
     def set_crosshair(self) -> None:
@@ -229,7 +242,7 @@ class Controller:
                 self.selected_side, -a0.angleDelta().y() / 4000
             )  # ToDo implement method
         else:
-            self.pcd_manager.zoom_into(a0.angleDelta().y())
+            self.pcd_manager.zoom_into(a0.angleDelta().y()*4)
             self.scroll_mode = True
 
     def key_press_event(self, a0: QtGui.QKeyEvent) -> None:

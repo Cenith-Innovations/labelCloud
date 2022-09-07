@@ -176,6 +176,7 @@ class GUI(QtWidgets.QMainWindow):
         self.button_incr_dim = self.findChild(QtWidgets.QPushButton, "button_bbox_incr")
 
         self.carryoverBBox = self.findChild(QtWidgets.QCheckBox, "checkBox_carryoverBBox")
+        self.estimateBBoxMove = self.findChild(QtWidgets.QCheckBox, "checkBox_estimateBBoxMove")
         
         # 2d image viewer
         self.button_2D = self.findChild(QtWidgets.QPushButton, "button_open_2D")
@@ -290,6 +291,10 @@ class GUI(QtWidgets.QMainWindow):
         #carryover bbox
         self.carryoverBBox.clicked.connect(
             lambda: self.controller.toggle_carryoverBBox()
+        )
+        #estimate bbox movement
+        self.estimateBBoxMove.clicked.connect(
+            lambda: self.controller.toggle_estimateBBoxMove()
         )
 
         # LABELING CONTROL
