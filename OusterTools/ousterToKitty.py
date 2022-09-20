@@ -20,11 +20,12 @@ def files(path):
 def clouds_to_bins(cloud_dir, out_dir):
 
     os.makedirs(out_dir, exist_ok=True)
+    idx = 0
     for fname in files(cloud_dir):
 
         pcd_path = os.path.join(cloud_dir, fname)
-        #out_path = os.path.join(out_dir, f'{idx:06d}.bin')
-        out_path = os.path.join(out_dir, os.path.splitext(fname)[0] + '.bin')
+        out_path = os.path.join(out_dir, f'{idx:06d}.bin')
+        #out_path = os.path.join(out_dir, os.path.splitext(fname)[0] + '.bin')
 
         pcd = o3d.io.read_point_cloud(pcd_path)
         cloud = np.asarray(pcd.points, dtype='float32')
@@ -33,20 +34,35 @@ def clouds_to_bins(cloud_dir, out_dir):
         vel_cloud = np.hstack((cloud, colors))
         vel_cloud = vel_cloud[:, :4]
 
+        print('Writing', out_path)
         out = open(out_path, 'wb')
         out.write(vel_cloud.tobytes())
         out.close()
 
-        #idx += 1
+        idx += 1
 
 
 def conv_labels(label_dir, out_dir):
 
     os.makedirs(out_dir, exist_ok=True)
+    idx = 0
     for fname in files(label_dir):
 
         f = open(os.path.join(label_dir, fname))
         label = json.load(f)
+
+        #kitti_name = os.path.splitext(fname)[0] + '.txt'
+        kitti_name =f'{idx:06d}.txt'
+        kitti_name = os.path.join(out_dir, kitti_name)
+        print('Writing', kitti_name)
+        idx += 1
+
+        if len(label['objects']) == 0:
+            kit_lab = open(kitti_name, 'w')
+            kit_lab.write('')
+            kit_lab.close()
+            continue
+
         drone = label['objects'][0]
         
         name = drone['name']
@@ -62,8 +78,6 @@ def conv_labels(label_dir, out_dir):
         
         obj_str = f'{name} 0 0 0 0 0 0 0 {height} {width} {length} {-1* y} {-1* z + (height/2)} {x} {-rz}'
 
-        kitti_name = os.path.splitext(fname)[0] + '.txt'
-        kitti_name = os.path.join(out_dir, kitti_name)
         kit_lab = open(kitti_name, 'w')
         kit_lab.write(obj_str)
         kit_lab.close()

@@ -101,4 +101,4 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     metadata, source = import_pcap(args.pcap, args.json)
-    pcap_to_cloud(source, metadata, args.num, args.dir, args.file_name, args.ext, args.field)
+    pcap_to_cloud(source, metadata, args.num, args.dir, args.file_name, args.ext, int(args.field))

@@ -277,6 +277,12 @@ class Controller:
                 self.align_mode.reset()
                 logging.info("Resetted selected points!")
 
+        elif a0.key() == QtCore.Qt.Key_Comma:
+            self.prev_pcd()
+
+        elif a0.key() == QtCore.Qt.Key_Period:
+            self.next_pcd()
+
         # BBOX Orthographic views
         elif (a0.key() == QtCore.Qt.Key_I):
             # view from the top
